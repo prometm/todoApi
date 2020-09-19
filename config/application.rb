@@ -40,7 +40,7 @@ module Api
     # CORS
     config.middleware.use Rack::Cors do
       allow do
-        origins 'maks-api-todo.herokuapp.com'
+        origins '*'
         resource '*',
           headers: :any,
           expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
