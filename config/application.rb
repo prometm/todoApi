@@ -44,7 +44,7 @@ module Api
         resource '*',
           headers: :any,
           expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
-          methods: [:get, :post, :options, :delete, :put, :patch], credentials: false
+          methods: [:get, :post, :options, :delete, :put, :patch], credentials: true
       end
     end
   end
