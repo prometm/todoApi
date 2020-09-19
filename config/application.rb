@@ -37,6 +37,11 @@ module Api
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
+    config.action_dispatch.default_headers = {
+        'Access-Control-Allow-Origin' => '*',
+        'Access-Control-Request-Method' => 'GET, PATCH, PUT, POST, OPTIONS, DELETE'
+    }
+
     # CORS
     config.middleware.use Rack::Cors do
       allow do
