@@ -1,4 +1,6 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Project, type: :model do
   let(:project) { FactoryBot.create(:project) }

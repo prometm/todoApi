@@ -7,6 +7,7 @@ Rails.application.routes.draw do
         resources :tasks do
           member { patch :position }
           member { patch :complete }
+          member { patch :deadline }
         end
       end
     end

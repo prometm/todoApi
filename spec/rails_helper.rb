@@ -1,27 +1,25 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
-# require 'spec_helper'
+# frozen_string_literal: true
 
-require "json_matchers/rspec"
+require 'json_matchers/rspec'
 
 require 'database_cleaner'
 
-JsonMatchers.schema_root = "spec/support/api/schemas"
+JsonMatchers.schema_root = 'spec/support/api/schemas'
 
 ENV['RAILS_ENV'] ||= 'test'
 
 require File.expand_path('../config/environment', __dir__)
-# require File.expand_path('../config/environment', __FILE__) # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# require File.expand_path('../config/environment', __FILE__) # !!!!!!!!!!!!!!!
 
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 
 if ENV['RAILS_ENV'] == 'test'
   require 'simplecov'
   SimpleCov.start 'rails'
-  puts "required simplecov"
+  puts 'required simplecov'
 end
-
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
@@ -30,7 +28,6 @@ Shoulda::Matchers.configure do |config|
     with.library :active_model
   end
 end
-
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -64,7 +61,7 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = false # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+  config.use_transactional_fixtures = false # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
@@ -88,5 +85,5 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-  config.include Rails.application.routes.url_helpers # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  config.include Rails.application.routes.url_helpers
 end

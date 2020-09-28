@@ -1,0 +1,13 @@
+Style/Documentation:
+  Enabled: false  
+AllCops:
+  Exclude:
+    - 'config/spring.rb'
+    - 'config/**/*'
+    - 'channels/**/*'
+    - 'bin/**/*'
+    - 'db/**/*'
+    - 'spec/**/*'
+    - 'config.ru'
+Metrics/LineLength:
+  Max: 120

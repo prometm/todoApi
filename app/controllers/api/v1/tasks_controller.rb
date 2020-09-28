@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class TasksController < ApplicationController
@@ -23,17 +25,17 @@ module Api
         end
       end
 
-      api :GET, '/v1/projects/:id/tasks', "Get all project's tasks"
+      api :GET, '/api/v1/projects/:id/tasks', "Get all project's tasks"
       def index
         render json: @tasks, status: :ok
       end
 
-      api :GET, '/v1/tasks/:id', 'Show the task'
+      api :GET, '/api/v1/projects/:project_id/tasks/:id', 'Show the task'
       def show
         render json: @task, status: :ok
       end
 
-      api :POST, '/v1/projects/:id/tasks', 'Create new task'
+      api :POST, '/api/v1/projects/:project_id/tasks', 'Create new task'
       param_group :task
       def create
         if @task.save
@@ -43,7 +45,7 @@ module Api
         end
       end
 
-      api :PATCH, '/v1/tasks/:id', 'Updates task with new name'
+      api :PATCH, '/api/v1/projects/:project_id/tasks/:id', 'Updates task with new name'
       param_group :task
       def update
         if @task.update(task_params)
@@ -53,12 +55,12 @@ module Api
         end
       end
 
-      api :DELETE, '/v1/tasks/:id', 'Deletes task'
+      api :DELETE, '/api/v1/projects/:project_id/tasks/:id', 'Deletes task'
       def destroy
         @task.destroy
       end
 
-      api :PATCH, '/v1/tasks/:id/position', 'Change position of task'
+      api :PATCH, '/api/v1/projects/:project_id/tasks/:id/position', 'Change position of task'
       param :data, Hash, required: true do
         param :attributes, Hash, required: true do
           param :position, Integer, required: true
@@ -73,10 +75,24 @@ module Api
         end
       end
 
-      api :PATCH, '/v1/tasks/:id/complete', "Set task's done to true or false"
+      api :PATCH, '/api/v1/projects/:project_id/tasks/:id/complete', "Set task's done to true or false"
       def complete
         @task.update(done: !@task.done)
         if @task.errors.empty?
+          render json: @task, status: :created
+        else
+          render json: task_errors, status: :unprocessable_entity
+        end
+      end
+
+      api :PATCH, '/api/v1/projects/:project_id/tasks/:id/deadline', "Set task's deadline"
+      param :data, Hash, required: true do
+        param :attributes, Hash, required: true do
+          param :deadline, String, required: false
+        end
+      end
+      def deadline
+        if @task.update(deadline_param)
           render json: @task, status: :created
         else
           render json: task_errors, status: :unprocessable_entity
@@ -95,6 +111,10 @@ module Api
 
       def position_param
         request_params.permit(:position)
+      end
+
+      def deadline_param
+        request_params.permit(:deadline)
       end
     end
   end
